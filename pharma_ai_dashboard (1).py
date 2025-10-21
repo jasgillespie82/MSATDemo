@@ -10,7 +10,7 @@ How to use Streamlit in 3 seconds:
     $ streamlit run my_script.py
 
     3. Use your app
-    A new tab will open on your browser. That's your Streamlit app!
+    3.1 A new tab will open on your browser. That's your Streamlit app!
 
     4. Modify your code, save it, and watch changes live on your browser.
 
