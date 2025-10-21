@@ -1,61 +1,49 @@
-Streamlit.
-
-How to use Streamlit in 3 seconds:
-
-    1. Write an app
-    >>> import streamlit as st
-    >>> st.write(anything_you_want)
-
-    2. Run your app
-    $ streamlit run my_script.py
-
-    3. Use your app
-    3.1 A new tab will open on your browser. That's your Streamlit app!
-
-    4. Modify your code, save it, and watch changes live on your browser.
-
-Take a look at the other commands in this module to find out what else
-Streamlit can do:
-
-    >>> dir(streamlit)
-
-Or try running our "Hello World":
-
-    $ streamlit hello
-
-For more detailed info, see https://docs.streamlit.io.
-
 import streamlit as st
 import pandas as pd
 
+# Mock data for batch records
 batch_data = pd.DataFrame({
-    'Batch ID': ['B001', 'B002', 'B003', 'B004'],
-    'Status': ['Complete', 'Deviation', 'Complete', 'Deviation'],
-    'Yield (%)': [98.5, 92.3, 97.8, 89.4],
-    'Deviation Notes': ['None', 'Temperature spike', 'None', 'Incorrect mixing time']
+    "Batch ID": ["B001", "B002", "B003", "B004"],
+    "Yield (%)": [98.5, 95.2, 89.7, 92.3],
+    "Deviation Notes": ["None", "Temperature spike", "Late material", "None"]
 })
 
+# Mock data for deviation analysis
+deviation_data = pd.DataFrame({
+    "Batch ID": ["B002", "B003"],
+    "Issue": ["Temperature spike", "Late material"],
+    "Severity": ["Medium", "High"]
+})
+
+# Mock data for predictive maintenance
 maintenance_data = pd.DataFrame({
-    'Machine': ['Mixer A', 'Filler B', 'Labeler C'],
-    'Last Maintenance': ['2025-09-15', '2025-08-30', '2025-10-01'],
-    'Predicted Issue': ['Bearing wear', 'Valve clog', 'Sensor drift'],
-    'Risk Level': ['Medium', 'High', 'Low']
+    "Equipment": ["Mixer A", "Dryer B", "Pump C"],
+    "Predicted Issue": ["Bearing wear", "Overheating", "Seal leak"],
+    "Risk Level": ["High", "Medium", "Low"]
 })
 
+# Streamlit app layout
 st.title("AI in Pharma Operations Dashboard")
 
-st.header("Batch Record Review")
-st.dataframe(batch_data)
+# Sidebar navigation
+option = st.sidebar.selectbox("Select Use Case", [
+    "Batch Record Review",
+    "Deviation Analysis",
+    "Predictive Maintenance"
+])
 
-deviation_batches = batch_data[batch_data['Status'] == 'Deviation']
-st.subheader("Deviation Analysis")
-st.write("Batches with deviations:")
-st.dataframe(deviation_batches)
+# Display selected use case
+if option == "Batch Record Review":
+    st.header("Batch Record Review")
+    st.write("Review batch performance and identify deviations.")
+    st.dataframe(batch_data)
 
-st.header("Predictive Maintenance Insights")
-st.dataframe(maintenance_data)
+elif option == "Deviation Analysis":
+    st.header("Deviation Analysis")
+    st.write("Analyze batches with recorded deviations.")
+    st.dataframe(deviation_data)
 
-high_risk = maintenance_data[maintenance_data['Risk Level'] == 'High']
-st.subheader("High Risk Equipment")
-st.write("Machines requiring urgent attention:")
-st.dataframe(high_risk)
+elif option == "Predictive Maintenance":
+    st.header("Predictive Maintenance")
+    st.write("Monitor equipment and predict potential failures.")
+    st.dataframe(maintenance_data)
